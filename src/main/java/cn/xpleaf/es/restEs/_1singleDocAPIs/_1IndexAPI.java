@@ -48,7 +48,8 @@ public class _1IndexAPI {
         String jsonString = "{" +
                 "\"user\":\"kimchy\"," +
                 "\"postDate\":\"2013-01-30\"," +
-                "\"message\":\"trying out Elasticsearch\"" +
+                "\"message\":\"trying out Elasticsearch\"," +
+                "\"age\":13" +
                 "}";
         request.source(jsonString, XContentType.JSON);
         client.index(request);
