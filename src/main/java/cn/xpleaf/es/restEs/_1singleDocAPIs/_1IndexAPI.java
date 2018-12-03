@@ -12,6 +12,8 @@ import org.junit.Test;
 /**
  * @author xpleaf
  * @date 2018/11/30 10:27 PM
+ *
+ * index操作请参考Jest Index API
  */
 public class _1IndexAPI {
 
