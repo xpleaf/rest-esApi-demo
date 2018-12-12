@@ -40,7 +40,7 @@ import java.util.Map;
  * https://www.elastic.co/guide/en/elasticsearch/client/java-rest/5.6/java-rest-high-java-builders.html
  * 不管是查询还是聚合，只要理解了es的原理，同时query DSL没有问题，其实Java代码是非常好写的，官方文档也非常容易看懂
  */
-public class _6SearchAPI {
+public class _6SearchAPI_AggAPI {
 
     // rest-low-level-client
     RestClient restLowLevelClient = null;
