@@ -211,14 +211,24 @@ public class _1IndexAPI {
         JestResult jestResult = client.execute(stats);
         if(jestResult.isSucceeded()) {
             JsonObject jsonObject = jestResult.getJsonObject();
-            long indexBytesSize = jsonObject
+            // 总的大小，主分片+副本分片
+            long indexTotalBytesSize = jsonObject
                     .getAsJsonObject("indices")
                     .getAsJsonObject("my_index")
                     .getAsJsonObject("total")
                     .getAsJsonObject("store")
                     .get("size_in_bytes").getAsLong();
-            System.out.println(String.format("字节数：%s", indexBytesSize));
-            System.out.println(String.format("%s gb", indexBytesSize / 1024.0 / 1024.0 / 1024.0));
+            System.out.println(String.format("总的字节数：%s", indexTotalBytesSize));
+            System.out.println(String.format("合计为：%s gb", indexTotalBytesSize / 1024.0 / 1024.0 / 1024.0));
+            // 主分片大小，这才是真正的大小
+            long indexPrimaryBytesSize = jsonObject
+                    .getAsJsonObject("indices")
+                    .getAsJsonObject("my_index")
+                    .getAsJsonObject("primaries")
+                    .getAsJsonObject("store")
+                    .get("size_in_bytes").getAsLong();
+            System.out.println(String.format("总的字节数：%s", indexPrimaryBytesSize));
+            System.out.println(String.format("合计为：%s gb", indexPrimaryBytesSize / 1024.0 / 1024.0 / 1024.0));
         }
     }
 }
