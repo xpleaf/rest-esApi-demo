@@ -1,5 +1,6 @@
 package cn.xpleaf.es.jestEs;
 
+import cn.xpleaf.es.jestEs.action.GetAliasSpecificNames;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,10 +17,7 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author xpleaf
@@ -229,6 +227,20 @@ public class _1IndexAPI {
                     .get("size_in_bytes").getAsLong();
             System.out.println(String.format("总的字节数：%s", indexPrimaryBytesSize));
             System.out.println(String.format("合计为：%s gb", indexPrimaryBytesSize / 1024.0 / 1024.0 / 1024.0));
+        }
+    }
+
+    // 通过别名获取到对应的索引（注意，一个别名可以对应多个索引，一个索引也可以有多个别名）
+    @Test
+    public void test10() throws Exception {
+        GetAliasSpecificNames aliasSpecificNames = new GetAliasSpecificNames.Builder().alias("alias_test").build();
+        JestResult jestResult = client.execute(aliasSpecificNames);
+        if(jestResult.isSucceeded()) {
+            JsonObject jsonObject = jestResult.getJsonObject();
+            System.out.println(jsonObject); // {"my_index3":{"aliases":{"alias_test":{}}},"my_index2":{"aliases":{"alias_test":{}}}}
+            // 转换为set
+            Set<String> indexNames = jsonObject.getAsJsonObject().keySet();
+            System.out.println(indexNames);
         }
     }
 }
