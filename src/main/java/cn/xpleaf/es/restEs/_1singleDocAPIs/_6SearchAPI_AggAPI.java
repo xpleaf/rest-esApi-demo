@@ -53,6 +53,7 @@ public class _6SearchAPI_AggAPI {
                 new HttpHost("localhost", 9200, "http")
                 // new HttpHost("localhost", 9201, "http")
                 // more hosts and ports
+                // 或者使用一个数组也是没有问题的，因为是可变长参数
         ).build();
         client = new RestHighLevelClient(restLowLevelClient);
     }
