@@ -2,12 +2,17 @@ package cn.xpleaf.es.restEs._1singleDocAPIs;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.rest.RestStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author xpleaf
@@ -53,6 +58,21 @@ public class _1IndexAPI {
                 "}";
         request.source(jsonString, XContentType.JSON);
         client.index(request);
+    }
+
+    // 使用对象创建，同时不指定id，由es自动生成id
+    @Test
+    public void test03() throws Exception {
+        IndexRequest indexRequest = new IndexRequest("posts", "doc");
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("user", "xpleaf");
+        dataMap.put("postDate", "2019-01-05");
+        dataMap.put("message", "Never stop trying.");
+        dataMap.put("age", 25);
+        indexRequest.source(dataMap);
+        IndexResponse indexResponse = client.index(indexRequest);
+        RestStatus status = indexResponse.status();
+        System.out.println(status);
     }
 
     @After
